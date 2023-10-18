@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>useCallback() and useMemo() Demo</title>
+    <script
+      type="text/javascript"
+      src="./libraries/react.development.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="./libraries/react-dom.development.js"
+    ></script>
+    <script type="text/javascript" src="./libraries/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="container"></div>
+    <script type="text/babel">
+      function CustomComponent() {
+        const [count, setCount] = React.useState(0);
+        
+        const increment = React.useCallback(() => {
+          setCount(count + 1);
+        }, [count]);
+
+        const isEven = React.useMemo(() => {
+          return count % 2 === 0;
+        }, [count]);
+
+
+        return (
+          <div>
+            <h1>Count: {count}</h1>
+            <p>{isEven ? 'Even' : 'Odd'}</p>
+            <button onClick={increment}>Increment</button>
+          </div>
+        );
+      }
+
+      const root = ReactDOM.createRoot(document.getElementById("container"));
+      root.render(<CustomComponent />);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Use Ref Demo</title>
+    <script
+      type="text/javascript"
+      src="./libraries/react.development.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="./libraries/react-dom.development.js"
+    ></script>
+    <script type="text/javascript" src="./libraries/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="container"></div>
+    <script type="text/babel">
+      function CustomComponent() {
+        const inputRef = React.useRef(null);
+        const focusInput = () => {
+          inputRef.current.focus();
+        };
+        return (
+          <div>
+            <input ref={inputRef}></input>
+            <button onClick={focusInput}>
+              Click me to focus on an input field
+            </button>
+          </div>
+        );
+      }
+
+      const root = ReactDOM.createRoot(document.getElementById("container"));
+      root.render(<CustomComponent />);
+    </script>
+  </body>
+</html>

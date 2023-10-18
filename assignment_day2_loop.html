@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Loop Demo</title>
+    <script
+      type="text/javascript"
+      src="./libraries/react.development.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="./libraries/react-dom.development.js"
+    ></script>
+    <script type="text/javascript" src="./libraries/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="container"></div>
+    <script type="text/babel">
+      class MyComponent extends React.Component {
+        state = {
+          colors: ["red", "yellow", "blue", "green"],
+          index: 0,
+        };
+        unmountComponent = () => {
+          root.unmount();
+          clearInterval(this.state.timerId);
+        };
+        constructor(props) {
+          super(props);
+        }
+
+        componentDidMount() {
+          const timerId = setInterval(() => {
+            const { colors, index } = this.state;
+            if (index >= this.state.colors.length - 1) {
+              this.setState({ index: 0 });
+            } else {
+              this.setState({ index: index + 1 });
+            }
+          }, 1000);
+          this.setState({ timerId });
+        }
+
+        render() {
+          const { colors, index } = this.state;
+          const currentColor = colors[index];
+
+          return (
+            <div>
+              <h1 style={{ color: currentColor }}>See here</h1>
+              <button onClick={this.unmountComponent}>Unmount Me</button>
+            </div>
+          );
+        }
+      }
+
+      const root = ReactDOM.createRoot(document.getElementById("container"));
+      root.render(<MyComponent />);
+    </script>
+  </body>
+</html>
